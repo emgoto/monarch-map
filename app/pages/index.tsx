@@ -1,13 +1,12 @@
-import { Suspense, useState } from "react"
-import { Link, BlitzPage, dynamic } from "blitz"
+import { useState } from "react"
+import { BlitzPage } from "blitz"
 import Layout from "app/core/layouts/Layout"
-import Navigation from "app/core/components/Navigation"
 import Form from "app/core/components/Form"
 import Hero from "app/core/components/Hero"
 import Map from "app/core/components/Map"
 
 const MapWithForm = ({ children }) => (
-  <div className="flex rounded-2xl bg-white w-9/12 mx-auto my-8">{children}</div>
+  <div className="flex rounded-2xl bg-white w-full mx-auto m-8">{children}</div>
 )
 
 const Home: BlitzPage = () => {

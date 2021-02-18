@@ -50,7 +50,7 @@ const SightingsMap = () => {
       container: "sightings-map",
       style: "mapbox://styles/mapbox/light-v10",
       center: [-122.47825510132367, 37.820072657260425],
-      zoom: 10,
+      zoom: 12,
       accessToken: process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
     })
 
@@ -65,9 +65,7 @@ const SightingsMap = () => {
         },
         paint: {
           "circle-radius": 10,
-          "circle-color": "#2DC4B2",
-          "circle-stroke-color": "white",
-          "circle-stroke-width": 1,
+          "circle-color": "#FBBF24",
           "circle-opacity": 0.5,
         },
       })
@@ -83,7 +81,7 @@ const SightingsMap = () => {
 
   return (
     <div>
-      <div id="sightings-map" />a
+      <div id="sightings-map" />
       <div id="console">
         <h1 className="text-yellow-600">Monarch sightings</h1>
         <div className="session" id="sliderbar">

@@ -4,12 +4,12 @@ const URL = "https://api.newrelic.com/graphql"
 const query = `{ actor { account(id: ${process.env.NEXT_PUBLIC_ACCOUNT_ID}) { nrql(query: \"SELECT x, y, date FROM Sighting SINCE 1 HOUR AGO\") {results}}}}`
 
 export default async function getEvents() {
+  const requestHeaders: HeadersInit = new Headers()
+  requestHeaders.set("Content-Type", "application/json")
+  requestHeaders.set("API-Key", process.env.NEXT_PUBLIC_API_KEY || "")
   const response = await fetch(URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "API-Key": process.env.NEXT_PUBLIC_API_KEY,
-    },
+    headers: requestHeaders,
     body: JSON.stringify({ query, variables: null }),
   })
 

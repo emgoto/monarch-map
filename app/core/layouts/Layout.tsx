@@ -1,7 +1,5 @@
 import { ReactNode, useEffect } from "react"
-import { Link, BlitzPage, dynamic } from "blitz"
 import Navigation from "app/core/components/Navigation"
-import Form from "app/core/components/Form"
 import { Head } from "blitz"
 
 type LayoutProps = {

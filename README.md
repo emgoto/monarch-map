@@ -19,6 +19,8 @@ NEXT_PUBLIC_API_KEY=
 NEXT_PUBLIC_MAPBOX_TOKEN=
 ```
 
+To make use of New Relic's browser monitoring, you'll also need to enter the JavaScript file in `public/NewRelicScript.js`.
+
 Run the Blitz.js app in the development mode.
 
 ```
