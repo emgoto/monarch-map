@@ -1,90 +1,31 @@
-import React, { useState, ReactNode, PropsWithoutRef } from "react"
-import { FormProvider, useForm, UseFormOptions } from "react-hook-form"
-import * as z from "zod"
+import { useMutation } from "blitz"
+import createEventMutation from "app/mutations/createEvent"
 
-export interface FormProps<S extends z.ZodType<any, any>>
-  extends Omit<PropsWithoutRef<JSX.IntrinsicElements["form"]>, "onSubmit"> {
-  /** All your form fields */
-  children?: ReactNode
-  /** Text to display in the submit button */
-  submitText?: string
-  schema?: S
-  onSubmit: (values: z.infer<S>) => Promise<void | OnSubmitResult>
-  initialValues?: UseFormOptions<z.infer<S>>["defaultValues"]
-}
-
-interface OnSubmitResult {
-  FORM_ERROR?: string
-  [prop: string]: any
-}
-
-export const FORM_ERROR = "FORM_ERROR"
-
-export function Form<S extends z.ZodType<any, any>>({
-  children,
-  submitText,
-  schema,
-  initialValues,
-  onSubmit,
-  ...props
-}: FormProps<S>) {
-  const ctx = useForm<z.infer<S>>({
-    mode: "onBlur",
-    resolver: async (values) => {
-      try {
-        if (schema) {
-          schema.parse(values)
-        }
-        return { values, errors: {} }
-      } catch (error) {
-        return { values: {}, errors: error.formErrors?.fieldErrors }
-      }
-    },
-    defaultValues: initialValues,
-  })
-  const [formError, setFormError] = useState<string | null>(null)
+const Form = ({ address, coords, date, setDate }) => {
+  const [createEvent] = useMutation(createEventMutation)
 
   return (
-    <FormProvider {...ctx}>
-      <form
-        onSubmit={ctx.handleSubmit(async (values) => {
-          const result = (await onSubmit(values)) || {}
-          for (const [key, value] of Object.entries(result)) {
-            if (key === FORM_ERROR) {
-              setFormError(value)
-            } else {
-              ctx.setError(key as any, {
-                type: "submit",
-                message: value,
-              })
-            }
-          }
-        })}
-        className="form"
-        {...props}
+    <div className="p-4 flex flex-col">
+      <div className="text-2xl text-yellow-700">Report a sighting</div>
+      <input
+        className="w-80 p-2 my-4 bg-gray-200 rounded-md"
+        disabled
+        placeholder="Search for a location on the map"
+        value={address}
+      />
+      <input
+        className="w-80 p-2 my-4 bg-gray-100 rounded-md"
+        placeholder="Enter date of sighting"
+        value={date}
+        onChange={(event) => setDate(event.target.value)}
+      />
+      <button
+        onClick={() => createEvent({ date, coords })}
+        className="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 my-4 rounded w-24"
       >
-        {/* Form fields supplied as children are rendered here */}
-        {children}
-
-        {formError && (
-          <div role="alert" style={{ color: "red" }}>
-            {formError}
-          </div>
-        )}
-
-        {submitText && (
-          <button type="submit" disabled={ctx.formState.isSubmitting}>
-            {submitText}
-          </button>
-        )}
-
-        <style global jsx>{`
-          .form > * + * {
-            margin-top: 1rem;
-          }
-        `}</style>
-      </form>
-    </FormProvider>
+        Submit
+      </button>
+    </div>
   )
 }
 

@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://unpkg.com/leaflet@1.6.0/dist/leaflet.css");
+@import url("https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css");
+@import url("https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css");
+
+#map {
+  min-width: 500px;
+  height: 300px;
+}
+
+#sightings-map {
+  min-width: 100vw;
+  height: 500px;
+}
+
+.mapboxgl-ctrl-geocoder.mapboxgl-ctrl > input {
+  height: 36px;
+  padding: 6px;
+  width: 100%;
+}
+
+.geocoder-pin-right {
+  height: 0;
+}
+
+#console {
+  position: absolute;
+  width: 240px;
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: white;
+  top: 64px;
+}

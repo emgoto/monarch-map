@@ -1,4 +1,7 @@
-import { ReactNode } from "react"
+import { ReactNode, useEffect } from "react"
+import { Link, BlitzPage, dynamic } from "blitz"
+import Navigation from "app/core/components/Navigation"
+import Form from "app/core/components/Form"
 import { Head } from "blitz"
 
 type LayoutProps = {
@@ -7,14 +10,29 @@ type LayoutProps = {
 }
 
 const Layout = ({ title, children }: LayoutProps) => {
+  useEffect(() => {
+    const script = document.createElement("script")
+
+    script.src = "/NewRelicScript.js"
+    script.async = true
+
+    document.body.appendChild(script)
+
+    return () => {
+      document.body.removeChild(script)
+    }
+  }, [])
+
   return (
     <>
       <Head>
         <title>{title || "monarch-map"}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      {children}
+      <div className="bg-yellow-50 min-h-screen">
+        <Navigation />
+        {children}
+      </div>
     </>
   )
 }
