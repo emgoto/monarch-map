@@ -6,9 +6,7 @@
     "build": "blitz build",
     "start": "blitz start",
     "studio": "blitz prisma studio",
-    "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
-    "test": "jest",
-    "test:watch": "jest --watch"
+    "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx ."
   },
   "browserslist": [
     "defaults"
@@ -23,7 +21,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged && pretty-quick --staged",
-      "pre-push": "tsc && npm run lint && npm run test"
+      "pre-push": "tsc && npm run lint"
     }
   },
   "lint-staged": {
