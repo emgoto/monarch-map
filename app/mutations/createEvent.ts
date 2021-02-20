@@ -5,10 +5,9 @@ export default async function createEvent({ date, coords }) {
   requestHeaders.set("Content-Type", "application/json")
   requestHeaders.set("X-Insert-Key", process.env.NEXT_PUBLIC_INSERT_KEY || "")
 
-  const response = await fetch(URL, {
+  await fetch(URL, {
     method: "POST",
+    headers: requestHeaders,
     body: JSON.stringify([{ eventType: "Sighting", x: coords[0], y: coords[1], date }]),
   })
-
-  return response.json()
 }

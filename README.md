@@ -4,9 +4,10 @@ This is my entry for the [DEV x New Relic hackathon](https://www.therelicans.com
 
 ## Tech stack
 
-- [Blitz.js](https://github.com/blitz-js/blitz)
+- [Blitz.js](https://blitzjs.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
 - [Mapbox](https://www.mapbox.com/)
-- [New Relic]
+- [New Relic](newrelic.com)
 
 ## Getting Started
 

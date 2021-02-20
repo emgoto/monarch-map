@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react"
 import { Map as MapboxMap } from "mapbox-gl"
 import { useQuery } from "blitz"
 import getEvents from "../../queries/getEvents"
+import { getLastSevenDays } from "../utils"
 
 // Convert New Relic data to geojson format
 const eventsToGeoJson = (events, date) => {
@@ -25,25 +26,16 @@ const eventsToGeoJson = (events, date) => {
   }
 }
 
-// Not using a real calendar here due to hackathon time constraints.
-const mockDates = {
-  0: "2021/02/07",
-  1: "2021/02/08",
-  2: "2021/02/09",
-  3: "2021/02/10",
-  4: "2021/02/11",
-  5: "2021/02/12",
-  6: "2021/02/13",
-}
-
 const SightingsMap = () => {
   const [events] = useQuery(getEvents, undefined)
   const [sliderIndex, setSliderIndex] = useState("6")
   const [loaded, hasLoaded] = useState(false)
-  const mapRef = useRef()
+  const mapRef = useRef<any>()
+  const lastSevenDays = getLastSevenDays().reverse()
 
-  const data = eventsToGeoJson(events?.data.actor.account.nrql.results, mockDates[sliderIndex])
-  const filter = ["==", ["string", ["get", "date"]], mockDates[sliderIndex]]
+  const sliderValue = lastSevenDays[parseInt(sliderIndex)]
+  const data = eventsToGeoJson(events?.data.actor.account.nrql.results, sliderValue)
+  const filter = ["==", ["string", ["get", "date"]], sliderValue]
 
   useEffect(() => {
     mapRef.current = new MapboxMap({
@@ -85,7 +77,7 @@ const SightingsMap = () => {
       <div id="console">
         <h1 className="text-yellow-600">Monarch sightings</h1>
         <div className="session" id="sliderbar">
-          <div className="text-sm text-gray">{mockDates[sliderIndex]}</div>
+          <div className="text-sm text-gray">{sliderValue}</div>
           <input
             id="slider"
             className="row"

@@ -4,6 +4,7 @@ import Layout from "app/core/layouts/Layout"
 import Form from "app/core/components/Form"
 import Hero from "app/core/components/Hero"
 import Map from "app/core/components/Map"
+import { getLastSevenDays } from "../core/utils"
 
 const MapWithForm = ({ children }) => (
   <div className="flex rounded-2xl bg-white w-full mx-auto m-8">{children}</div>
@@ -12,7 +13,8 @@ const MapWithForm = ({ children }) => (
 const Home: BlitzPage = () => {
   const [address, setAddress] = useState()
   const [coords, setCoords] = useState()
-  const [date, setDate] = useState()
+  const lastSevenDays = getLastSevenDays()
+  const [date, setDate] = useState(lastSevenDays[0])
 
   return (
     <>
